@@ -1,5 +1,8 @@
-FROM openjdk:21-ea-slim-buster
+FROM ubuntu:24.04
+RUN apt-get update
+RUN apt-get install -y openjdk-21-jdk maven
 WORKDIR /app
-COPY target/coffee-0.0.1-SNAPSHOT.jar /app
+COPY . .
+RUN mvn clean package -Dmaven.test.skip=true
 EXPOSE 8080
-CMD ["java", "-jar", "coffee-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "target/coffee-0.0.1-SNAPSHOT.jar"]
